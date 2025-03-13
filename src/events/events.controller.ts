@@ -1,25 +1,36 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { EventsService } from './events.service';
+import { Event } from './event.entity';
 
 @Controller('events')
 export class EventsController {
   constructor(private eventService: EventsService) {}
 
   @Get()
-  findAll(): any[] {
+  findAll(): Promise<Event[]> {
     return this.eventService.findAll();
   }
+
+  @Get(':id')
+  findOne(@Param('id') id: number): any {
+    return this.eventService.findOne(id);
+  }
+
+  // @Get()
+  // findAll(): any[] {
+  //   return this.eventService.findAll();
+  // }
   // http://localhost:3000/events
 
 
   // Path
+  // @Get(':id')
+  // findOne(@Param('id') id: string): any {
+  //   return this.eventService
+  //     .findAll()
+  //     .find((event) => event.id === parseInt(id));
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): any {
-    return this.eventService
-      .findAll()
-      .find((event) => event.id === parseInt(id));
-  }
   // http://localhost:3000/events/2
 
   // @Get(':name')
